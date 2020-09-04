@@ -1,5 +1,7 @@
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
+import { port } from './config';
+import models from './models';
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
@@ -20,6 +22,14 @@ const server = new ApolloServer({ typeDefs, resolvers });
 const app = express();
 server.applyMiddleware({ app });
 
-app.listen({ port: 4000 }, () =>
-  console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
+app.listen({ port }, async () => {
+  console.log(`Server ready at http://localhost:${port}${server.graphqlPath}`);
+
+  try {
+    await models.sequelize.authenticate();
+    console.log('Connection to db has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
 );
