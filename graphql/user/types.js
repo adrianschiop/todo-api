@@ -17,8 +17,8 @@ const userType = gql`
   }
 
   extend type Mutation {
-    signUp(name: String!, email: String!, password: String!): UserAuth
-    login(email: String!, password: String!): UserAuth
+    signUp(name: String!, email: Email!, password: Password!): UserAuth
+    login(email: Email!, password: Password!): UserAuth
     refreshAccessToken(refreshToken: String!): RefreshToken
   }
 `;

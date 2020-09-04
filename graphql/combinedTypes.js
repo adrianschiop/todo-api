@@ -4,6 +4,9 @@ import userTypes from './user/types';
 import todoTypes from './todo/types';
 
 const queryTypes = gql`
+  scalar Password
+  scalar Email
+
   type Query {
     _: Boolean
   }
