@@ -16,6 +16,10 @@ const server = new ApolloServer({
     }
 
     return {
+      checkAccess: (authScope) => {
+        if (!authScope || !authScope.user)
+          throw new Error('Unauthorized!');
+      },
       authScope: await getUser(req.headers.authorization),
       models
     };

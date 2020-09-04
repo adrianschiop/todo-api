@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Todo = sequelize.define('Todo', {
-    UserId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     title: DataTypes.STRING,
     completed: DataTypes.BOOLEAN,
   }, {});

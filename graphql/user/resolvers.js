@@ -1,4 +1,4 @@
-import { encryptPassword, authenticate, generateToken } from '../../utils';
+import { encryptPassword, authenticate, generateToken, generateRefreshToken, getUser } from '../../utils';
 
 const userResolvers = {
   Mutation: {
@@ -11,7 +11,8 @@ const userResolvers = {
         });
 
         return {
-          token: generateToken(user)
+          token: generateToken(user),
+          refreshToken: generateRefreshToken(user)
         };
       } catch (error) {
         throw new Error(error.errors[0].message);
@@ -32,12 +33,20 @@ const userResolvers = {
       }
 
       return {
-        token: generateToken(user)
+        token: generateToken(user),
+        refreshToken: generateRefreshToken(user)
       };
     },
 
     refreshAccessToken: async (root, { refreshToken }, { models: { User } }) => {
-      //TODO: logic here
+      const { user } = await getUser(refreshToken, true);
+
+      if (!user)
+        throw new Error('Invalid refresh token');
+
+      return {
+        token: generateToken(user)
+      };
     }
   }
 };

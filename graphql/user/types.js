@@ -9,12 +9,17 @@ const userType = gql`
 
   type UserAuth {
     token: String
+    refreshToken: String
+  }
+
+  type RefreshToken {
+    token: String
   }
 
   extend type Mutation {
     signUp(name: String!, email: String!, password: String!): UserAuth
     login(email: String!, password: String!): UserAuth
-    refreshAccessToken(refreshToken: String!): UserAuth
+    refreshAccessToken(refreshToken: String!): RefreshToken
   }
 `;
 
