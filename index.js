@@ -1,23 +1,26 @@
 import express from 'express';
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import { port } from './config';
+import typeDefs from './graphql/combinedTypes';
+import resolvers from './graphql/combinedResolvers';
 import models from './models';
+import { getUser } from './utils';
 
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req, connection }) => {
+    if (connection) {
+      // check connection for metadata
+      return connection.context;
+    }
+
+    return {
+      authScope: await getUser(req.headers.authorization),
+      models
+    };
   }
-`;
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-};
-
-const server = new ApolloServer({ typeDefs, resolvers });
+});
 
 const app = express();
 server.applyMiddleware({ app });
@@ -31,5 +34,4 @@ app.listen({ port }, async () => {
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
-}
-);
+});

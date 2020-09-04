@@ -19,7 +19,9 @@
   "homepage": "https://github.com/adrianschiop/todo-api#readme",
   "dependencies": {
     "apollo-server-express": "^2.17.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5"
