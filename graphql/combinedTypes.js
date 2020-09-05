@@ -8,6 +8,7 @@ const queryTypes = gql`
 
   scalar Password
   scalar Email
+  scalar Boolean
 
   type Query {
     _: Boolean
