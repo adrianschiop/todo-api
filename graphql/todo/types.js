@@ -8,13 +8,13 @@ const postTypes = gql`
   }
 
   extend type Query {
-    listTodos (limit: Int): [Todo]
+    listTodos (isCompleted: Boolean, limit: Int): [Todo] @authenticated
   }
 
   extend type Mutation {
-    createTodo(title: String!): Todo
-    updateTodo(id: Int!, isCompleted: Boolean!): Boolean
-    deleteTodo(id: Int!): Boolean
+    createTodo(title: String!): Todo @authenticated
+    updateTodo(id: Int!, isCompleted: Boolean!): Boolean @authenticated
+    deleteTodo(id: Int!): Boolean @authenticated
   }
 `;
 

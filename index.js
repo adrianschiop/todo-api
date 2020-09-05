@@ -3,12 +3,16 @@ import { ApolloServer } from 'apollo-server-express';
 import { port } from './config';
 import typeDefs from './graphql/combinedTypes';
 import resolvers from './graphql/combinedResolvers';
+import { AuthenticatedDirective } from './graphql/directives';
 import models from './models';
 import { getUser } from './utils';
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  schemaDirectives: {
+    authenticated: AuthenticatedDirective
+  },
   context: async ({ req, connection }) => {
     if (connection) {
       // check connection for metadata
@@ -16,10 +20,6 @@ const server = new ApolloServer({
     }
 
     return {
-      checkAccess: (authScope) => {
-        if (!authScope || !authScope.user)
-          throw new Error('Unauthorized!');
-      },
       authScope: await getUser(req.headers.authorization),
       models
     };

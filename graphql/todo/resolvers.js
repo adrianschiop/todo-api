@@ -1,23 +1,20 @@
-//TODO: Find a cleaner way to check access !!!
-
 const todoResolvers = {
   Query: {
-    listTodos: (root, { limit }, { models: { Todo }, checkAccess, authScope }) => {
-      checkAccess(authScope);
+    listTodos: (root, { isCompleted = null, limit }, { models: { Todo }, authScope }) => {
+      let filters = {};
 
-      return Todo.findAll({ where: { userId: authScope.user.id }, order: [['id', 'DESC']], limit });
+      if (isCompleted !== null)
+        filters.completed = isCompleted;
+
+      return Todo.findAll({ where: { ...filters, userId: authScope.user.id }, order: [['id', 'DESC']], limit });
     }
   },
   Mutation: {
-    createTodo: (root, { title }, { models: { Todo }, checkAccess, authScope }) => {
-      checkAccess(authScope);
-
-      return Todo.create({ title, userId: authScope.user.id });
+    createTodo: (root, { title }, { models: { Todo }, authScope }) => {
+      return Todo.create({ title, userId: authScope.user.id, completed: false });
     },
 
-    updateTodo: (root, { id, isCompleted }, { models: { Todo }, checkAccess, authScope }) => {
-      checkAccess(authScope);
-
+    updateTodo: (root, { id, isCompleted }, { models: { Todo }, authScope }) => {
       return Todo.update({
         completed: isCompleted
       }, {
@@ -28,9 +25,7 @@ const todoResolvers = {
       });
     },
 
-    deleteTodo: (root, { id }, { models: { Todo }, checkAccess, authScope }) => {
-      checkAccess(authScope);
-
+    deleteTodo: (root, { id }, { models: { Todo }, authScope }) => {
       return Todo.destroy({
         where: {
           id,

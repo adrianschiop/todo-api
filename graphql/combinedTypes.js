@@ -4,6 +4,8 @@ import userTypes from './user/types';
 import todoTypes from './todo/types';
 
 const queryTypes = gql`
+  directive @authenticated on QUERY | FIELD_DEFINITION
+
   scalar Password
   scalar Email
 
