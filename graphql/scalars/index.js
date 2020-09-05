@@ -21,6 +21,7 @@ const customScalars = {
       return value;
     }
   }),
+  // @Feedback: GraphQL has it's own inbuilt Boolean type. 
   Boolean: new GraphQLScalarType({
     name: "Boolean",
     description: "Boolean scalar type",

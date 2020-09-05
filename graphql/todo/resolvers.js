@@ -1,6 +1,10 @@
+// @Feedback: It would be great to have an intermediary layer between GrqphQL and the ORM, so the GraphQL layer does
+// not need to work with ORM directly. Some kind of repository layer for example. For a small app like this of course
+// it's not necessary.
 const todoResolvers = {
   Query: {
     listTodos: (root, { isCompleted = null, limit }, { models: { Todo }, authScope }) => {
+      // @Feedback: Why `let` over `const` in this case?
       let filters = {};
 
       if (isCompleted !== null)
@@ -20,6 +24,7 @@ const todoResolvers = {
       }, {
         where: {
           id,
+          // @Feedback: Thumbs up for this extra condition 👍
           userId: authScope.user.id
         }
       });
