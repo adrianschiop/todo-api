@@ -27,7 +27,15 @@ const server = new ApolloServer({
 });
 
 const app = express();
-server.applyMiddleware({ app });
+server.applyMiddleware({
+  app,
+  cors: {
+    origin(origin, callback) {
+      callback(null, true); // TODO: Check against a whiteList (now all are accepted)
+    },
+    credentials: true
+  }
+});
 
 app.listen({ port }, async () => {
   console.log(`Server ready at http://localhost:${port}${server.graphqlPath}`);
