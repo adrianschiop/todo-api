@@ -17,8 +17,8 @@ export default {
   jwt: {
     secret: process.env.JWT_SECRET || '$u2kD6L8BXMjNRkg2RZ[Qbb5ze*d`HAV',
     expiresIn: {
-      token: '1h',
-      refreshToken: '30 days',
+      token: process.env.JWT_EXPIRE_TOKEN || '1h',
+      refreshToken: process.env.JWT_EXPIRE_REFRESH_TOKEN || '30 days',
     },
   },
 };
