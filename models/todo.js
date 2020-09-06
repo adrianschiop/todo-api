@@ -2,12 +2,12 @@ module.exports = (sequelize, DataTypes) => {
   const Todo = sequelize.define('Todo', {
     userId: DataTypes.INTEGER,
     title: DataTypes.STRING,
-    completed: DataTypes.BOOLEAN
+    completed: DataTypes.BOOLEAN,
   }, {
-    tableName: 'Todos'
+    tableName: 'Todos',
   });
 
-  Todo.associate = function (models) {
+  Todo.associate = function associate(models) {
     // associations
     Todo.belongsTo(models.User, { foreignKey: 'userId', targetKey: 'id' });
   };

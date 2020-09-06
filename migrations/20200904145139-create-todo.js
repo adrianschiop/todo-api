@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Todos', {
@@ -22,7 +21,7 @@ module.exports = {
       completed: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
-        default: true
+        default: true,
       },
       createdAt: {
         allowNull: false,
@@ -31,10 +30,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-      }
+      },
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('Todos');
-  }
+  },
 };

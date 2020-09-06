@@ -7,12 +7,12 @@ const userResolvers = {
         const user = await User.create({
           name,
           email,
-          password: encryptPassword(password)
+          password: encryptPassword(password),
         });
 
         return {
           token: generateToken(user),
-          refreshToken: generateRefreshToken(user)
+          refreshToken: generateRefreshToken(user),
         };
       } catch (error) {
         throw new Error(error.errors[0].message);
@@ -34,21 +34,22 @@ const userResolvers = {
 
       return {
         token: generateToken(user),
-        refreshToken: generateRefreshToken(user)
+        refreshToken: generateRefreshToken(user),
       };
     },
 
-    refreshAccessToken: async (root, { refreshToken }, { models: { User } }) => {
+    refreshAccessToken: async (root, { refreshToken }) => {
       const { user } = await getUser(refreshToken, true);
 
-      if (!user)
+      if (!user) {
         throw new Error('Invalid refresh token');
+      }
 
       return {
-        token: generateToken(user)
+        token: generateToken(user),
       };
-    }
-  }
+    },
+  },
 };
 
 export default userResolvers;

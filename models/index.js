@@ -1,21 +1,15 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import fs from 'fs';
 import path from 'path';
 import { Sequelize, DataTypes } from 'sequelize';
-import configFile from '../config/config';
+import config from '../config';
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = configFile[env];
 const db = {};
 
-let sequelize;
-
 // Instantiate sequelize with name of database, username and password
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password, config.db);
 
 // Import models
 fs

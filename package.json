@@ -8,7 +8,8 @@
     "build": "babel ./ -d ./build --ignore node_modules,package* --copy-files",
     "serve": "node build/index.js",
     "migrate": "sequelize db:migrate",
-    "migrate:undo": "sequelize db:migrate:undo:all"
+    "migrate:undo": "sequelize db:migrate:undo:all",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "apollo-server-express": "^2.17.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
@@ -38,7 +41,30 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/runtime": "^7.11.2",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.6",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "rules": {
+      "indent": "off",
+      "max-len": "off",
+      "no-shadow": "off",
+      "comma-style": "off",
+      "no-plusplus": "off",
+      "arrow-parens": "off",
+      "no-await-in-loop": "off",
+      "consistent-return": "off",
+      "operator-linebreak": "off",
+      "no-confusing-arrow": "off",
+      "object-curly-newline": "off",
+      "function-paren-newline": "off",
+      "implicit-arrow-linebreak": "off"
+    }
   }
 }

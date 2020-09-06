@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { port } from './config';
+import config from './config';
 import typeDefs from './graphql/combinedTypes';
 import resolvers from './graphql/combinedResolvers';
 import { AuthenticatedDirective } from './graphql/directives';
@@ -11,7 +12,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   schemaDirectives: {
-    authenticated: AuthenticatedDirective
+    authenticated: AuthenticatedDirective,
   },
   context: async ({ req, connection }) => {
     if (connection) {
@@ -21,9 +22,9 @@ const server = new ApolloServer({
 
     return {
       authScope: await getUser(req.headers.authorization),
-      models
+      models,
     };
-  }
+  },
 });
 
 const app = express();
@@ -33,12 +34,12 @@ server.applyMiddleware({
     origin(origin, callback) {
       callback(null, true); // TODO: Check against a whiteList (now all are accepted)
     },
-    credentials: true
-  }
+    credentials: true,
+  },
 });
 
-app.listen({ port }, async () => {
-  console.log(`Server ready at http://localhost:${port}${server.graphqlPath}`);
+app.listen({ port: config.server.port }, async () => {
+  console.log(`Server ready at http://localhost:${config.server.port}${server.graphqlPath}`);
 
   try {
     await models.sequelize.authenticate();

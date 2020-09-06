@@ -2,4 +2,6 @@ import customScalars from './scalars';
 import userResolvers from './user/resolvers';
 import todoResolvers from './todo/resolvers';
 
-export default [customScalars, userResolvers, todoResolvers];
+const combinedResolvers = [customScalars, userResolvers, todoResolvers];
+
+export default combinedResolvers;

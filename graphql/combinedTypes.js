@@ -1,4 +1,3 @@
-// @flow
 import { gql } from 'apollo-server-express';
 import userTypes from './user/types';
 import todoTypes from './todo/types';
